@@ -14,7 +14,7 @@
     "support": {
         "docs": "https://docs.gepettoapp.com",
         "issues": "https://github.com/Gepetto-AI/gepetto-php/issues",
-        "email": "api@gepettoapp.com"
+        "email": "contact@gepettoapp.com"
     },
     "require": {
         "php": ">=8.2",

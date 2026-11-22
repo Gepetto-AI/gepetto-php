@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.2
+
+- Support email: contact@gepettoapp.com.
+
 ## 0.1.1
 
 - `composer require gepetto/sdk`: the SDK is on Packagist.

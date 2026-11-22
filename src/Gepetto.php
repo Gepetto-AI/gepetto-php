@@ -22,7 +22,7 @@ namespace Gepetto;
  */
 final class Gepetto
 {
-    public const VERSION = '0.1.1';
+    public const VERSION = '0.1.2';
     public const DEFAULT_BASE_URL = 'https://europe-west1-gepettoai.cloudfunctions.net/v2';
 
     /** Seconds. A render is stopped by the API after 450 s: 10 minutes covers it, retries included. */
