@@ -1,0 +1,43 @@
+{
+    "name": "gepetto/sdk",
+    "description": "The official PHP SDK of the Gepetto API v2: real estate photo editing. Enhance, declutter, furnish, blue sky, restyle, walls and floors, upscale.",
+    "type": "library",
+    "license": "MIT",
+    "keywords": ["gepetto", "real estate", "virtual staging", "home staging", "photo editing", "declutter", "api", "sdk"],
+    "homepage": "https://docs.gepettoapp.com",
+    "authors": [
+        {
+            "name": "Gepetto",
+            "homepage": "https://gepettoapp.com"
+        }
+    ],
+    "support": {
+        "docs": "https://docs.gepettoapp.com",
+        "issues": "https://github.com/Gepetto-AI/gepetto-php/issues",
+        "email": "api@gepettoapp.com"
+    },
+    "require": {
+        "php": ">=8.2",
+        "ext-curl": "*",
+        "ext-json": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Gepetto\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Gepetto\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
+    },
+    "config": {
+        "sort-packages": true
+    }
+}
