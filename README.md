@@ -173,6 +173,10 @@ Gepetto is the AI photo studio for real estate professionals. From a single phot
 
 [gepettoapp.com](https://gepettoapp.com) · [API documentation](https://docs.gepettoapp.com) · [TypeScript SDK](https://github.com/Gepetto-AI/gepetto-sdk) · [CLI](https://github.com/Gepetto-AI/gepetto-cli)
 
+## Changes
+
+See [CHANGELOG.md](CHANGELOG.md).
+
 ## License
 
 MIT
