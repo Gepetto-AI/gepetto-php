@@ -103,6 +103,8 @@ $video = $gepetto->transition(['jobId' => $staged->id, 'transitionId' => $transi
 echo $video->output; // https://assets.gepettoapp.com/api/v2/jobs/.../output.mp4
 ```
 
+In a web request, send a `webhook`: most servers stop a request long before a video is ready.
+
 ## Lists
 
 The ids are not guessable: they come from the API.
