@@ -30,6 +30,8 @@ final class Gepetto
     private const DEFAULT_MAX_RETRIES = 2;
     /** Seconds between two checks of a running job. */
     private const POLL_INTERVAL = 2.5;
+    /** Seconds a video waits by default: it takes 2 to 10 minutes, and the API gives it up after 30. */
+    private const VIDEO_TIMEOUT = 1800.0;
 
     public readonly string $baseUrl;
     /** Seconds: how long a call waits for its image (each call can set its own). */
@@ -158,6 +160,34 @@ final class Gepetto
         return $this->render('/upscale', $params, $options);
     }
 
+    // --- Videos: 6 seconds, MP4, live keys only ------------------------------------------------------------------
+    // A video takes 2 to 10 minutes: the method waits up to 30 minutes (or set 'timeout'), or returns at once with
+    // 'webhook'.
+
+    /**
+     * A slow camera move in the photo. 0.80 € per video.
+     *
+     * @param array{url: string, camera: 'zoom_in'|'zoom_out'|'zoom_in_pan_left'|'zoom_in_pan_right'|'crane_up'|'crane_down'|'crab_left'|'crab_right', timelapse?: bool, resolution?: '768p'|'1080p', webhook?: string} $params
+     * @param array{idempotencyKey?: string, timeout?: float} $options
+     */
+    public function cameraMove(array $params, array $options = []): Job
+    {
+        return $this->render('/video/camera-move', $params, $options + ['timeout' => self::VIDEO_TIMEOUT]);
+    }
+
+    /**
+     * From a photo to its edited version. The images: 'jobId' (a finished render: its original goes to its result),
+     * or 'url' and 'endUrl' of the same proportions. The animation: 'transitionId' (listTransitions()) or your own
+     * 'prompt' in English. 1.60 € per video.
+     *
+     * @param array{jobId?: string, url?: string, endUrl?: string, transitionId?: string, prompt?: string, negativePrompt?: string, webhook?: string} $params
+     * @param array{idempotencyKey?: string, timeout?: float} $options
+     */
+    public function transition(array $params, array $options = []): Job
+    {
+        return $this->render('/video/transition', $params, $options + ['timeout' => self::VIDEO_TIMEOUT]);
+    }
+
     // --- Jobs ----------------------------------------------------------------------------------------------------
 
     public function getJob(string $id): Job
@@ -207,6 +237,12 @@ final class Gepetto
     public function listFurnitures(): array
     {
         return $this->get('/furnitures');
+    }
+
+    /** @return list<array{id: string, name: string, name_en?: string, preview: ?string}> transitionId: the animations of transition(). */
+    public function listTransitions(): array
+    {
+        return $this->get('/video/transitions');
     }
 
     /** @return list<array{id: string, name: string, name_en?: string}> skyId. */

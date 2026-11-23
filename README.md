@@ -86,6 +86,23 @@ $gepetto->enhance(['url' => $photoUrl, 'straighten' => true], [
 ]);
 ```
 
+## Videos
+
+Two 6-second videos, as MP4. They need a live key (a test key gets `live_key_required`) and take 2 to 10 minutes: the method waits up to 30 minutes, or returns at once with `webhook`.
+
+| Method | What it does |
+| --- | --- |
+| `cameraMove(['url' => ..., 'camera' => 'zoom_in'])` | A slow camera move in the photo (`zoom_out`, `crane_up`, `crab_left`...; also `timelapse`, `resolution`), 0.80 € |
+| `transition(['jobId' => ..., 'transitionId' => ...])` | From the original of a finished render to its result, 1.60 € |
+| `transition(['url' => ..., 'endUrl' => ..., 'prompt' => ...])` | From one photo to another, with your own animation |
+
+```php
+$staged = $gepetto->furnish(['url' => $photoUrl, 'roomId' => 'living_room', 'styleId' => 'scandinave']);
+$transitions = $gepetto->listTransitions(); // the animations, with their names
+$video = $gepetto->transition(['jobId' => $staged->id, 'transitionId' => $transitions[0]['id']]);
+echo $video->output; // https://assets.gepettoapp.com/api/v2/jobs/.../output.mp4
+```
+
 ## Lists
 
 The ids are not guessable: they come from the API.
@@ -95,6 +112,7 @@ $gepetto->listRooms();      // roomId, with the modes of each room ('auto': whol
 $gepetto->listStyles();     // styleId
 $gepetto->listFurnitures(); // furnitureId, grouped by type
 $gepetto->listSkies();      // skyId
+$gepetto->listTransitions(); // transitionId
 $gepetto->listSurfaces();   // ['walls' => ..., 'floors' => ..., 'finishes' => ...]
 ```
 

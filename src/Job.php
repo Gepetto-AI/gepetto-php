@@ -13,12 +13,12 @@ final readonly class Job
         public string $id,
         /** `pending`, `processing`, `success` or `error`. */
         public string $status,
-        /** `declutter`, `furnish`, `sunshine`, `creative-redesign`, `surfaces`, `enhance` or `upscale`. */
+        /** `declutter`, `furnish`, `sunshine`, `creative-redesign`, `surfaces`, `enhance`, `upscale`, `camera-move` or `transition`. */
         public string $tool,
         /** declutter and furnish: `auto` or `zone`; sunshine: the sky id; surfaces: `walls`, `floor` or `finish`;
          *  enhance: `straighten` or null; upscale: `2k` or `4k`; creative-redesign: null. */
         public ?string $mode,
-        /** The image, once `status` is `success`. A public URL: copy the image to your storage if you keep it. */
+        /** The image (an MP4 video for camera-move and transition), once `status` is `success`. A public URL: copy it to your storage if you keep it. */
         public ?string $output,
         /** @var array{code: string, message: string}|null */
         public ?array $error,

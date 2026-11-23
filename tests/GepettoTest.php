@@ -196,6 +196,29 @@ final class GepettoTest extends TestCase
         }
     }
 
+    public function testAVideo_IsFollowedUntilTheMp4IsReady(): void
+    {
+        $processing = self::job('processing');
+        $done = self::job('success', 'https://img/output.mp4');
+        $gepetto = $this->client([['status' => 202, 'body' => $processing], ['status' => 200, 'body' => $done]]);
+
+        $job = $gepetto->cameraMove(['url' => 'https://img/p.jpg', 'camera' => 'zoom_in']);
+
+        $this->assertSame('https://img/output.mp4', $job->output);
+        $this->assertStringEndsWith('/v2/video/camera-move', $this->requests[0]['url']);
+        $this->assertSame(['url' => 'https://img/p.jpg', 'camera' => 'zoom_in'], json_decode($this->requests[0]['body'], true));
+    }
+
+    public function testATransitionFromAJob_SendsItsFields(): void
+    {
+        $gepetto = $this->client([['status' => 202, 'body' => self::job('processing')]]);
+
+        $gepetto->transition(['jobId' => 'job_9', 'prompt' => 'The furniture appears', 'webhook' => 'https://me/hook']);
+
+        $this->assertStringEndsWith('/v2/video/transition', $this->requests[0]['url']);
+        $this->assertSame('job_9', json_decode($this->requests[0]['body'], true)['jobId']);
+    }
+
     public function testListJobs_ReturnsJobs(): void
     {
         $gepetto = $this->client([['status' => 200, 'body' => [self::job('success', 'https://img/o.jpg')]]]);
